@@ -15,4 +15,4 @@ jobs:
         run: |
           sudo install -m 0700 mcu_keepalive.py /usr/local/sbin/rk3588-mcu-keepalive.py
           sudo install -m 0700 shimeta_usb_power.py /usr/local/sbin/shimeta-usb-power
-          systemd-analyze verify systemd/*.service
+          sudo systemd-analyze verify systemd/*.service
