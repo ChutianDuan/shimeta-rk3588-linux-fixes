@@ -1,0 +1,19 @@
+[Unit]
+Description=Enable Shimeta AIoT-3588A V1.3 USB port power
+After=local-fs.target systemd-udevd.service
+Before=multi-user.target
+StartLimitIntervalSec=0
+ConditionPathExists=/proc/device-tree/compatible
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/shimeta-usb-power
+RemainAfterExit=yes
+Restart=on-failure
+RestartSec=2
+TimeoutStartSec=30
+StateDirectory=shimeta-usb-power
+StateDirectoryMode=0700
+
+[Install]
+WantedBy=multi-user.target

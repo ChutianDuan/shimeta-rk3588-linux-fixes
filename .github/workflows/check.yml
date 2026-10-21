@@ -1,0 +1,18 @@
+name: Check
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Mock protocol and deployment tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Shell syntax
+        run: sh -n install.sh
+      - name: Verify systemd units without accessing hardware
+        run: |
+          sudo install -m 0700 mcu_keepalive.py /usr/local/sbin/rk3588-mcu-keepalive.py
+          sudo install -m 0700 shimeta_usb_power.py /usr/local/sbin/shimeta-usb-power
+          systemd-analyze verify systemd/*.service

@@ -1,0 +1,16 @@
+[Unit]
+Description=Shimeta RK3588 MCU boot handshake and watchdog heartbeat
+After=local-fs.target systemd-udevd.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=notify
+NotifyAccess=main
+ExecStart=/usr/bin/python3 /usr/local/sbin/rk3588-mcu-keepalive.py --experimental-run
+Restart=on-failure
+RestartSec=2
+TimeoutStartSec=30
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target
